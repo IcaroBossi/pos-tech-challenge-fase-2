@@ -156,6 +156,12 @@ npm run test:coverage
 
 ```
 pos-tech-challenge-fase-2/
+├── .github/
+│   └── workflows/
+│       └── ci-cd.yml       # Pipeline GitHub Actions
+├── .vscode/
+│   └── tasks.json         # Configurações VS Code
+├── coverage/              # Relatórios de cobertura de testes (gerada automaticamente)
 ├── src/
 │   ├── app.js              # Aplicação principal
 │   ├── config/
@@ -170,10 +176,15 @@ pos-tech-challenge-fase-2/
 │       └── posts.js       # Rotas dos posts
 ├── tests/
 │   └── posts.test.js      # Testes unitários
+├── .env                   # Variáveis de ambiente (não versionado)
+├── .env.example          # Exemplo de variáveis de ambiente
+├── .gitignore           # Arquivos ignorados pelo Git
 ├── docker-compose.yml     # Configuração Docker Compose
 ├── Dockerfile            # Configuração Docker
 ├── init-mongo.js         # Script de inicialização do MongoDB
-└── package.json         # Dependências e scripts
+├── package-lock.json     # Lock de dependências
+├── package.json         # Dependências e scripts
+└── README.md            # Documentação principal
 ```
 
 ## 🔒 Variáveis de Ambiente
@@ -206,11 +217,11 @@ npm run test:coverage
 
 O projeto utiliza GitHub Actions para automação:
 
-- ✅ Execução de testes em múltiplas versões do Node.js
-- 🔍 Análise de segurança com Snyk
+- ✅ Execução de testes em múltiplas versões do Node.js (18.x e 20.x)
 - 🐳 Build e push automático de imagens Docker
-- 📊 Cobertura de código com Codecov
+- 📊 Cobertura de código com relatórios detalhados
 - 🚀 Deploy automatizado na branch main
+- 🔄 Pipeline completo de integração contínua
 
 ## 📊 Monitoramento
 
@@ -231,9 +242,10 @@ A aplicação registra:
 
 - Rate limiting (100 req/15min por IP)
 - Helmet para headers de segurança
-- Validação rigorosa de dados
+- Validação de dados com Joi
 - Sanitização de inputs
-- Auditoria de dependências
+- Tratamento seguro de erros
+- CORS configurado adequadamente
 
 ## 📈 Performance
 
@@ -252,22 +264,13 @@ As imagens são automaticamente publicadas no Docker Hub:
 docker pull icarobossi/blog-aulas-api:latest
 ```
 
-## 📝 Experiências e Desafios
+## 📝 Desafios Enfrentados
 
-### Principais Aprendizados
-
-1. **Arquitetura RESTful**: Implementação de uma API seguindo princípios REST
-2. **Validação de Dados**: Uso do Joi para validação robusta
-3. **Containerização**: Configuração completa com Docker e Docker Compose
-4. **Testes Automatizados**: Cobertura de código e testes de integração
-5. **CI/CD**: Automação completa com GitHub Actions
-
-### Desafios Enfrentados
-
-1. **Configuração do MongoDB**: Integração com Docker e configuração de índices
-2. **Validação Complexa**: Balanceamento entre validação client-side e server-side
-3. **Testes de Integração**: Configuração de ambiente de teste isolado
-4. **Performance**: Otimização de consultas e implementação de paginação
+1. **Configuração do MongoDB**: Integração com Docker e configuração de volumes persistentes
+2. **Validação Complexa**: Implementação de validação em múltiplas camadas (middleware + model)
+3. **Testes de Integração**: Configuração de ambiente de teste isolado com banco separado
+4. **Performance de Busca**: Implementação de busca textual eficiente com paginação
+5. **CI/CD Pipeline**: Configuração de workflow automatizado
 
 ## 👨‍💻 Autor
 
