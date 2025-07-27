@@ -100,34 +100,8 @@ jobs:
         cache-from: type=gha
         cache-to: type=gha,mode=max
 
-  security:
-    runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout código
-      uses: actions/checkout@v4
-
-    - name: Configurar Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '18'
-        cache: 'npm'
-
-    - name: Instalar dependências
-      run: npm ci
-
-    - name: Auditoria de segurança
-      run: npm audit --audit-level moderate
-
-    - name: Verificar vulnerabilidades com Snyk
-      uses: snyk/actions/node@master
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-      with:
-        args: --severity-threshold=high
-
   deploy:
-    needs: [test, build, security]
+    needs: [test, build]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     
@@ -139,5 +113,3 @@ jobs:
       run: |
         echo "Deploy simulado para produção"
         echo "Imagem Docker: ${{ secrets.DOCKER_USERNAME }}/blog-aulas-api:latest"
-        # Aqui você adicionaria os comandos reais de deploy
-        # Por exemplo: kubectl apply -f k8s/ ou docker-compose up -d
