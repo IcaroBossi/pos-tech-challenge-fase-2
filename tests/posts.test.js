@@ -16,7 +16,16 @@ describe('Posts Controller', () => {
   });
 
   afterAll(async () => {
-    await mongoose.connection.close();
+    // Aguardar operações pendentes finalizarem
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    // Fechar conexão MongoDB de forma segura
+    if (mongoose.connection.readyState !== 0) {
+      await mongoose.connection.close();
+    }
+    
+    // Aguardar um pouco mais para garantir limpeza completa
+    await new Promise(resolve => setTimeout(resolve, 500));
   });
 
   describe('POST /posts', () => {
