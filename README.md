@@ -218,9 +218,9 @@ npm run test:coverage
 O projeto utiliza GitHub Actions para automação:
 
 - ✅ Execução de testes em múltiplas versões do Node.js (18.x e 20.x)
-- 🐳 Build e push automático de imagens Docker
+- 🐳 Build e validação de imagens Docker
 - 📊 Cobertura de código com relatórios detalhados
-- 🚀 Deploy automatizado na branch main
+- 🚀 Simulação de deploy automatizado
 - 🔄 Pipeline completo de integração contínua
 
 ## 📊 Monitoramento
@@ -256,11 +256,15 @@ A aplicação registra:
 
 ## 🚀 Deploy
 
-### Docker Hub
+### Docker Build Local
 
-As imagens são automaticamente publicadas no Docker Hub:
+O pipeline CI/CD constrói e valida a imagem Docker automaticamente:
 
 ```bash
+# Build local da imagem
+docker build -t blog-aulas-api:latest .
+
+# Para produção, seria publicado em registry como Docker Hub
 docker pull icarobossi/blog-aulas-api:latest
 ```
 
