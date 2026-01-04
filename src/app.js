@@ -6,6 +6,8 @@ const rateLimit = require('express-rate-limit');
 
 const { connectDB } = require('./config/database');
 const postsRoutes = require('./routes/posts');
+const professorRoutes = require('./routes/professorRoutes');
+const alunoRoutes = require('./routes/alunoRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -50,6 +52,8 @@ app.get('/health', (req, res) => {
 
 // Rotas da aplicação
 app.use('/posts', postsRoutes);
+app.use('/professores', professorRoutes);
+app.use('/alunos', alunoRoutes);
 
 // Rota para endpoint não encontrado
 app.use('*', (req, res) => {

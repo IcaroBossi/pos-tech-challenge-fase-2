@@ -165,9 +165,205 @@ const validateSearchQuery = (req, res, next) => {
   next();
 };
 
+// ==================== VALIDAÇÕES DE PROFESSOR ====================
+
+// Schema de validação para criação de professor
+const createProfessorSchema = Joi.object({
+  nome: Joi.string()
+    .trim()
+    .min(2)
+    .max(100)
+    .required()
+    .messages({
+      'string.empty': 'Nome é obrigatório',
+      'string.min': 'Nome deve ter pelo menos 2 caracteres',
+      'string.max': 'Nome deve ter no máximo 100 caracteres',
+      'any.required': 'Nome é obrigatório'
+    }),
+  
+  email: Joi.string()
+    .trim()
+    .email()
+    .required()
+    .messages({
+      'string.empty': 'Email é obrigatório',
+      'string.email': 'Email deve ter um formato válido',
+      'any.required': 'Email é obrigatório'
+    }),
+  
+  disciplina: Joi.string()
+    .trim()
+    .max(100)
+    .optional()
+    .allow('')
+    .messages({
+      'string.max': 'Disciplina deve ter no máximo 100 caracteres'
+    })
+});
+
+// Schema de validação para atualização de professor
+const updateProfessorSchema = Joi.object({
+  nome: Joi.string()
+    .trim()
+    .min(2)
+    .max(100)
+    .optional()
+    .messages({
+      'string.min': 'Nome deve ter pelo menos 2 caracteres',
+      'string.max': 'Nome deve ter no máximo 100 caracteres'
+    }),
+  
+  email: Joi.string()
+    .trim()
+    .email()
+    .optional()
+    .messages({
+      'string.email': 'Email deve ter um formato válido'
+    }),
+  
+  disciplina: Joi.string()
+    .trim()
+    .max(100)
+    .optional()
+    .allow('')
+    .messages({
+      'string.max': 'Disciplina deve ter no máximo 100 caracteres'
+    })
+});
+
+// Middleware para validar criação de professor
+const validateCreateProfessor = (req, res, next) => {
+  const { error } = createProfessorSchema.validate(req.body);
+  
+  if (error) {
+    return res.status(400).json({
+      sucesso: false,
+      mensagem: 'Dados inválidos',
+      erros: error.details.map(detail => detail.message)
+    });
+  }
+  
+  next();
+};
+
+// Middleware para validar atualização de professor
+const validateUpdateProfessor = (req, res, next) => {
+  const { error } = updateProfessorSchema.validate(req.body);
+  
+  if (error) {
+    return res.status(400).json({
+      sucesso: false,
+      mensagem: 'Dados inválidos',
+      erros: error.details.map(detail => detail.message)
+    });
+  }
+  
+  next();
+};
+
+// ==================== VALIDAÇÕES DE ALUNO ====================
+
+// Schema de validação para criação de aluno
+const createAlunoSchema = Joi.object({
+  nome: Joi.string()
+    .trim()
+    .min(2)
+    .max(100)
+    .required()
+    .messages({
+      'string.empty': 'Nome é obrigatório',
+      'string.min': 'Nome deve ter pelo menos 2 caracteres',
+      'string.max': 'Nome deve ter no máximo 100 caracteres',
+      'any.required': 'Nome é obrigatório'
+    }),
+  
+  email: Joi.string()
+    .trim()
+    .email()
+    .required()
+    .messages({
+      'string.empty': 'Email é obrigatório',
+      'string.email': 'Email deve ter um formato válido',
+      'any.required': 'Email é obrigatório'
+    }),
+  
+  turma: Joi.string()
+    .trim()
+    .max(50)
+    .optional()
+    .allow('')
+    .messages({
+      'string.max': 'Turma deve ter no máximo 50 caracteres'
+    })
+});
+
+// Schema de validação para atualização de aluno
+const updateAlunoSchema = Joi.object({
+  nome: Joi.string()
+    .trim()
+    .min(2)
+    .max(100)
+    .optional()
+    .messages({
+      'string.min': 'Nome deve ter pelo menos 2 caracteres',
+      'string.max': 'Nome deve ter no máximo 100 caracteres'
+    }),
+  
+  email: Joi.string()
+    .trim()
+    .email()
+    .optional()
+    .messages({
+      'string.email': 'Email deve ter um formato válido'
+    }),
+  
+  turma: Joi.string()
+    .trim()
+    .max(50)
+    .optional()
+    .allow('')
+    .messages({
+      'string.max': 'Turma deve ter no máximo 50 caracteres'
+    })
+});
+
+// Middleware para validar criação de aluno
+const validateCreateAluno = (req, res, next) => {
+  const { error } = createAlunoSchema.validate(req.body);
+  
+  if (error) {
+    return res.status(400).json({
+      sucesso: false,
+      mensagem: 'Dados inválidos',
+      erros: error.details.map(detail => detail.message)
+    });
+  }
+  
+  next();
+};
+
+// Middleware para validar atualização de aluno
+const validateUpdateAluno = (req, res, next) => {
+  const { error } = updateAlunoSchema.validate(req.body);
+  
+  if (error) {
+    return res.status(400).json({
+      sucesso: false,
+      mensagem: 'Dados inválidos',
+      erros: error.details.map(detail => detail.message)
+    });
+  }
+  
+  next();
+};
+
 module.exports = {
   validateCreatePost,
   validateUpdatePost,
   validateObjectId,
-  validateSearchQuery
+  validateSearchQuery,
+  validateCreateProfessor,
+  validateUpdateProfessor,
+  validateCreateAluno,
+  validateUpdateAluno
 };
